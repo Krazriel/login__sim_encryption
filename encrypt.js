@@ -8,6 +8,7 @@ let salt = '';
 let hash = '';
 let list = [];
 let reg = false;
+let del = false;
 
 function generateSalt(){
     salt = '';
@@ -19,22 +20,36 @@ function generateSalt(){
 }
 
 function display(){
-    let newUsername = document.createElement('div');
-    let newSalt = document.createElement('div');
-    let newPassword = document.createElement('div');
-
-    newUsername.innerText = username;
-    newSalt.innerText = salt;
-    newPassword.innerText = hash;
 
     const usernameField = document.getElementById('userList');
     const saltField = document.getElementById('saltList');
     const passwordField = document.getElementById('passwordList');
 
-    usernameField.appendChild(newUsername);
-    saltField.appendChild(newSalt);
-    passwordField.appendChild(newPassword);
+    let usernameChild = usernameField.children;
+    let saltChild = saltField.children;
+    let passwordChild = passwordField.children;
+
+    for(let i = 1; i < usernameChild.length; i++){
+        usernameChild[i].innerText = '';
+        saltChild[i].innerText = '';
+        passwordChild[i].innerText = '';
+    }
+
+    for (let username in list){
+        let newUsername = document.createElement('div');
+        let newSalt = document.createElement('div');
+        let newPassword = document.createElement('div');
+
+        newUsername.innerText = username;
+        newSalt.innerText = list[username][0];
+        newPassword.innerText = list[username][1];
+
+        usernameField.appendChild(newUsername);
+        saltField.appendChild(newSalt);
+        passwordField.appendChild(newPassword);
+    }
 }
+
 
 function clearDB(){
     const usernameField = document.getElementById('userList');
@@ -51,11 +66,15 @@ function clearDB(){
         passwordChild[i].innerText = '';
     }
 
-    list = [];
+    if(!del){
+        list = [];
+    }
 }
 
 function submit(username, password, salt){
     if(!reg){
+        document.getElementById('user').value = '';
+        document.getElementById('pwd').value = '';
         validate(username, password);
     }
     else{
@@ -71,13 +90,19 @@ function submit(username, password, salt){
 function validate(username, password){
     if(list[username] != null){
         let passwordChk = md5(list[username][0] + password);
-        if(passwordChk == list[username][1]){
-            alert('Login Successful');
+        if(del && passwordChk == list[username][1]){
+            deleteUser(username);
+            alert('Deletion Successful');
         }
         else{
-            alert('Incorrect Username or Password');
+            if(passwordChk == list[username][1]){
+                alert('Login Successful');
+            }
+            else{
+                alert('Incorrect Username or Password');
+            }
+            return true;
         }
-        return true;
     }
     else{
         alert('User does not exist');
@@ -95,6 +120,13 @@ function register(username){
     }
 }
 
+function deleteUser(username){
+    delete list[username];
+    document.getElementById('user').value = '';
+    document.getElementById('pwd').value = '';
+    display();
+}
+
 window.onload = () => {
     const submitBtn = document.getElementById('encryptBtn');
     const clearBtn = document.getElementById('clearBtn');
@@ -105,7 +137,7 @@ window.onload = () => {
         username = document.getElementById('user').value;
         password = document.getElementById('pwd').value;
         if(username == '' || password == ''){
-            alert('Need to enter username or password');
+            alert('Need to enter username and password');
         }
         else{
             salt = generateSalt();
@@ -113,6 +145,7 @@ window.onload = () => {
         }
     });
     clearBtn.addEventListener('click', function(){
+        del = false;
         clearDB();
     });
     registerBtn.addEventListener('click', function(){
@@ -120,7 +153,7 @@ window.onload = () => {
         username = document.getElementById('user').value;
         password = document.getElementById('pwd').value;
         if(username == '' || password == ''){
-            alert('Need to enter username or password');
+            alert('Need to enter username and password');
         }
         else{
             if(!register(username)){
@@ -128,5 +161,17 @@ window.onload = () => {
                 setInterval(submit(username, password, salt), 0);
             }
         }
+    });
+    deleteBtn.addEventListener('click', function(){
+        del = true;
+        username = document.getElementById('user').value;
+        password = document.getElementById('pwd').value;
+        if(username == '' || password == ''){
+            alert('Need to enter username and password');
+        }
+        else{
+            validate(username, password);
+        }
+        
     });
 }
