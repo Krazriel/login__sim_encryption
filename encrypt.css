@@ -1,0 +1,57 @@
+.entryField{
+    display: flex;
+}
+
+.username, .salt, .encryptedPassword{
+    margin-left: 10px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.loginContainer{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.title{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.localDB{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
+}
+
+.usernameList, .saltList, .passwordList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fieldName{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.accountManager{
+    display: flex;
+    column-gap: 10px;
+}
+
+.db_caption{
+    margin-top: 100px;
+    font-weight: bold;
+    font-size: 20px;
+}

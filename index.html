@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Encryption - Salted MD5</title>
+        <link rel="stylesheet" href="encrypt.css">
+        <script src="node_modules/blueimp-md5/js/md5.min.js"></script>
+        <script src="encrypt.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="loginContainer">
+                <div class="title">Login Simulation with Encryption</div>
+                <input type="text" class="usernameEntry" id="user" placeholder="Username">
+                <input type="password" class="passwordEntry" id="pwd" placeholder="Password">
+                <div class="accountManager">
+                    <button class="encryptBtn" id="encryptBtn">Login</button>
+                    <button class="registerBtn" id="registerBtn">Register</button>
+                </div>
+                <button class="clearBtn" id="clearBtn">Clear Database</button>
+            </div>
+            
+            <div class="db_caption">User-Password Database</div>
+            <div class="localDB">
+                <div class="usernameList" id="userList">
+                    <div class="fieldName">Username</div>
+                </div>
+                <div class="saltList" id="saltList">
+                    <div class="fieldName">Salt</div>
+                </div>
+                <div class="passwordList" id="passwordList"> 
+                    <div class="fieldName">Password</div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
