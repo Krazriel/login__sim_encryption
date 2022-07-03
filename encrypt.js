@@ -134,6 +134,7 @@ window.onload = () => {
     const deleteBtn = document.getElementById('deleteBtn');
     submitBtn.addEventListener('click', function(){
         reg = false;
+        del = false;
         username = document.getElementById('user').value;
         password = document.getElementById('pwd').value;
         if(username == '' || password == ''){
